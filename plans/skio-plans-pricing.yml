@@ -1,0 +1,96 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Skio
+providerId: skio
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Subscriptions
+- Shopify
+- Ecommerce
+- DTC
+- Recurring Billing
+- Plans
+description: >-
+  Skio uses transparent, all-features-included pricing with no free tier. The
+  Scale plan carries a flat monthly platform fee plus a per-order transaction
+  fee on subscription orders; Enterprise is custom for high-volume merchants and
+  adds dedicated support, roadmap input, early access, and custom development.
+  The developer API (GraphQL) has no separate fee - it is included with a Skio
+  subscription and access is gated to paying merchants via a dashboard-issued API
+  token. Historically Skio marketed a straight 1% of subscription revenue with no
+  monthly base fee; current published pricing is the Scale monthly fee plus
+  1% + 20c per subscription order.
+notes: >-
+  Prices captured 2026-07 from skio.com/pricing. Skio was acquired by Recharge in
+  2026, so verify current plan names and rates during reconciliation. The "1% +
+  20c per subscription order" transaction fee is charged on top of the monthly
+  platform fee.
+sources:
+- https://skio.com/pricing
+- https://skio.com/
+- https://apps.shopify.com/skio
+plans:
+- id: skio-scale
+  name: Scale
+  type: paid
+  description: >-
+    The complete Skio feature set with all features included and no upsells -
+    subscriptions, passwordless subscriber portal, one-click Shop Pay checkout,
+    dunning, analytics, and full GraphQL API access. Flat monthly platform fee
+    plus a per-order transaction fee on subscription orders.
+  entries:
+  - label: Monthly Platform Fee
+    name: scale_platform_fee
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $599/month (billed monthly) or $499/month (billed annually)
+    userMultiplied: false
+  - label: Subscription Order Transaction Fee
+    name: scale_transaction_fee
+    type: usage
+    metric: orders
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1% + $0.20 per subscription order
+    userMultiplied: false
+  elements:
+  - name: All Features Included
+  - name: Passwordless Subscriber Portal
+  - name: One-Click Shop Pay Checkout
+  - name: GraphQL API Access
+  - name: Analytics
+- id: skio-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom plan for high-volume merchants. Includes all Scale features plus
+    dedicated support, roadmap input, early access, and custom development.
+    Contact Skio for pricing.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Dedicated Support
+  - name: Roadmap Input
+  - name: Early Access
+  - name: Custom Development
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

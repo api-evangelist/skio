@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Skio
+providerId: skio
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Subscriptions
+- Shopify
+- Ecommerce
+- Recurring Billing
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Skio spend. Skio is a SaaS subscription-management platform for
+  Shopify DTC brands, billed as a flat monthly platform fee (Scale plan) plus a
+  per-order transaction fee (1% + $0.20) on each subscription order, with a
+  custom Enterprise tier for high-volume merchants. The dominant, variable cost
+  driver is the transaction fee, which scales directly with subscription order
+  volume and average order value. The GraphQL API carries no separate fee - it is
+  included with the plan - so API usage does not add a line item beyond the
+  platform and transaction fees.
+notes: >-
+  Rates captured 2026-07 from skio.com/pricing; not reconciled. Skio was acquired
+  by Recharge in 2026 - verify plan names and rates during reconciliation. The
+  1% + $0.20 transaction fee is charged per subscription order on top of the
+  monthly platform fee.
+sources:
+- https://skio.com/pricing
+- https://skio.com/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Skio
+serviceCategory: Commerce and Subscriptions
+billingModel:
+  pricingCategory: Subscription-Plus-Usage
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+focusColumns:
+  ServiceName: Skio Subscriptions
+  ServiceCategory: Commerce and Subscriptions
+  ProviderName: Skio
+  PublisherName: Skio
+  InvoiceIssuerName: Skio
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription-Plus-Usage
+meters:
+- name: platform_fee
+  description: Flat monthly platform subscription fee for the Skio plan.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: subscription_orders
+  description: Per-order transaction fee (1% + $0.20) charged on each subscription order processed through Skio.
+  unit: orders
+  aggregation: sum
+  dimensions:
+  - account
+  - shop
+- name: subscription_revenue
+  description: Gross subscription revenue processed, the base against which the 1% transaction component is assessed.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - account
+  - shop
+principles:
+- name: Visibility
+  description: Track subscription order count and gross subscription revenue per shop; the 1% + $0.20 transaction fee scales directly with both.
+- name: Allocation
+  description: Map platform and transaction fees to each Shopify store / brand and to the subscription program that generates them.
+- name: Optimization
+  description: Reduce churn and consolidate low-value orders (bundling, longer intervals) to improve the ratio of subscription revenue to per-order fees; compare Scale annual vs monthly billing.
+- name: Accountability
+  description: Assign an owner for the subscription P&L; review monthly platform + transaction fees against subscription revenue and LTV gains.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

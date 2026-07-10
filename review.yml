@@ -1,0 +1,79 @@
+aid: skio
+name: Skio
+review:
+  question: Does Skio expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-10'
+  reviewer: API Evangelist
+  graphqlSchemaCreated: true
+  graphqlScopeNote: |
+    Skio's public developer API is GraphQL-first, served from a single HTTPS
+    endpoint (https://graphql.skio.com/v1/graphql). An honestly-modeled
+    GraphQL schema was authored at graphql/skio-schema.graphql covering
+    subscriptions, subscribers (StorefrontUsers), orders, products, and
+    selling plans. No WebSocket surface was modeled because none is documented.
+findings:
+  summary: |
+    Skio does not publish a documented public WebSocket API. Skio's public
+    developer surface is a single GraphQL over HTTPS endpoint at
+    https://graphql.skio.com/v1/graphql, documented at https://code.skio.com/.
+    It is a Hasura-style API (where/order_by/limit/offset read queries plus
+    purpose-built write mutations) whose data model mirrors Shopify GraphQL
+    objects via a platformId field. Although the underlying stack is Hasura -
+    which can technically expose GraphQL subscriptions over WebSocket - Skio
+    does not document any public WebSocket, ws:// or wss:// endpoint, or
+    realtime subscription surface for third-party developers. Skio has also
+    announced a newer public REST API (https://skio.com/changelog/public-rest-api),
+    but its endpoint paths and resources are not yet fully documented publicly;
+    it is likewise HTTPS request/response, not WebSocket. Data change
+    notifications to merchants are delivered through Shopify's native webhook
+    and subscription infrastructure, not a Skio-hosted socket.
+  transports:
+    - protocol: GraphQL
+      scheme: https
+      baseURL: https://graphql.skio.com/v1/graphql
+      documented: true
+      note: "Single GraphQL over HTTPS endpoint; API token auth (authorization: API <token>)."
+    - protocol: REST
+      scheme: https
+      documented: partial
+      note: A public REST API has been announced (skio.com/changelog/public-rest-api); base URL and endpoint paths are not yet fully documented publicly.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No public WebSocket, GraphQL-subscription-over-WebSocket, or realtime socket endpoint is documented in Skio's API reference as of the review date.
+  documentedLimits:
+    - Depth limit - maximum 4 nested levels per query
+    - Node limit - maximum 100 nodes per request
+    - Rate limit - 2,000 requests per minute per API token
+  accessModel: |
+    Gated. API tokens are generated from the Skio merchant dashboard and scope
+    to a single shop; access requires a paid Skio plan (Scale or Enterprise).
+    Because Skio does not publish a full GraphQL SDL, the schema in this repo is
+    honestly modeled (endpointsModeled) from the documented queries, mutations,
+    and examples at code.skio.com.
+sources:
+  - url: https://code.skio.com/
+    type: APIReference
+    note: Primary API reference. Documents the GraphQL endpoint, API-token auth, depth/node/rate limits, and the list of queries and mutations. No WebSocket mentioned.
+  - url: https://skio.com/
+    type: Website
+    note: Product marketing; Skio, a Recharge Company - subscriptions for Shopify DTC brands.
+  - url: https://skio.com/changelog/public-rest-api
+    type: Documentation
+    note: Announces a public REST API; detailed endpoint documentation not yet public.
+  - url: https://skio.com/pricing
+    type: Plans
+    note: Scale and Enterprise plans; 1% + 20c per subscription order transaction fee. No WebSocket relevance.
+  - url: https://help.skio.com/docs/storefront-graphql-api-docs
+    type: Documentation
+    note: Storefront GraphQL guidance; leverages Shopify Storefront API and native checkout. No Skio WebSocket surface.
+actions:
+  graphqlSchemaPath: graphql/skio-schema.graphql
+  graphqlDocPath: graphql/skio-graphql.md
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface is documented. Skio's public API is GraphQL
+    over HTTPS, so a modeled GraphQL schema and companion doc were authored and
+    referenced from apis.yml. The schema is flagged as honestly-modeled
+    (endpointsModeled) because Skio does not publish a complete SDL.

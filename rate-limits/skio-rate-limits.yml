@@ -1,0 +1,54 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Skio
+providerId: skio
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Subscriptions
+- Shopify
+- GraphQL
+- Rate Limiting
+- Quotas
+description: >-
+  Skio's public GraphQL API publishes explicit limits per API token: a maximum
+  query depth of 4 nested levels, a maximum of 100 nodes per request, and a
+  sustained rate of 2,000 requests per minute per API token. These are drawn
+  directly from Skio's API reference at code.skio.com. Query cost is therefore
+  shaped by both request rate and per-query complexity (depth and node count),
+  in the typical Hasura style.
+notes: >-
+  Limits captured 2026-07 from the Skio API reference (https://code.skio.com/).
+  Verify current numbers during reconciliation, especially given the 2026
+  Recharge acquisition. The announced public REST API may carry its own,
+  separately documented limits.
+sources:
+- https://code.skio.com/
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests Per Minute
+  scope: token
+  metric: requests
+  limit: 2000 per minute per API token
+  notes: Sustained request-rate cap enforced per API token.
+- name: Query Depth
+  scope: request
+  metric: nesting_levels
+  limit: 4
+  notes: A single GraphQL query may nest at most 4 levels deep.
+- name: Node Limit
+  scope: request
+  metric: nodes
+  limit: 100
+  notes: A single request may return at most 100 nodes.
+policies:
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+- name: Query Complexity Management
+  description: Keep queries within the 4-level depth and 100-node ceilings by paginating with limit/offset and selecting only needed fields, rather than deeply nesting related objects.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
