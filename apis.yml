@@ -105,6 +105,8 @@ apis:
     and delivery policies, and add or remove product variants from selling plan groups
     that define which products can be sold as subscriptions.
 common:
+- type: DomainSecurity
+  url: security/skio-domain-security.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/skio
 - type: Website
