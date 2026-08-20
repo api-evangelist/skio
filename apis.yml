@@ -25,6 +25,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/skio.png
 tags:
+- Subscription
+- Shopify
+- E-Commerce
+- Direct to Consumer
+- Recurring Billing
+- GraphQL
+tags_raw:
 - Subscriptions
 - Shopify
 - Ecommerce
@@ -38,6 +45,10 @@ apis:
 - aid: skio:skio-subscriptions-api
   name: Skio Subscriptions API
   tags:
+  - Subscription
+  - Recurring Billing
+  - GraphQL
+  tags_raw:
   - Subscriptions
   - Recurring Billing
   - GraphQL
@@ -80,6 +91,10 @@ apis:
 - aid: skio:skio-orders-api
   name: Skio Orders API
   tags:
+  - Order
+  - E-Commerce
+  - GraphQL
+  tags_raw:
   - Orders
   - Ecommerce
   - GraphQL
@@ -99,6 +114,11 @@ apis:
 - aid: skio:skio-products-selling-plans-api
   name: Skio Products & Selling Plans API
   tags:
+  - Product
+  - Selling Plans
+  - Catalog
+  - GraphQL
+  tags_raw:
   - Products
   - Selling Plans
   - Catalog
