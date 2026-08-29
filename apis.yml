@@ -11,6 +11,17 @@ description: Skio is a subscription-management platform for Shopify DTC brands
   where/order_by/limit/offset arguments; writes are purpose-built mutations
   (createSubscription, cancelSubscription, pauseSubscription, applyDiscountCode).
   A newer public REST API has also been announced.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
