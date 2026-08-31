@@ -39,7 +39,7 @@ tags:
 - Subscription
 - Shopify
 - E-Commerce
-- Direct to Consumer
+- DTC
 - Recurring Billing
 - GraphQL
 tags_raw:
@@ -148,6 +148,11 @@ apis:
     and delivery policies, and add or remove product variants from selling plan groups
     that define which products can be sold as subscriptions.
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/recharge-payments/
+  name: Recharge
+  x-relationship: acquired
+  x-evidence: "Skio is a subscription-management platform for Shopify DTC brands (acquired by Recharge in 2026), powering recurring orders, passwordless subscriber portals, and one-click Shop Pay checkout."
 - type: DomainSecurity
   url: security/skio-domain-security.yml
 - type: LinkedIn
